@@ -21,10 +21,9 @@ class Scene extends StatelessWidget {
             ],
           ),
         ),
-
-        body: Center(          
+        body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16),            
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -32,27 +31,51 @@ class Scene extends StatelessWidget {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      ListTile(
-                        title: Text('Tarefa 1'),
-                        subtitle: Text('20/11/2020'),
-                        leading: Icon(
-                          Icons.save,
-                          size: 30,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xffdbebeb), // Cor de fundo do Container
+                          border: Border.all(
+                            color: Colors.grey, // Cor da borda
+                            width: 1.0, // Largura da borda
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              8.0), // Raio do canto da borda
                         ),
-                        onTap: () {
-                          print('Tarefa 1');
-                        },
+                        child: ListTile(
+                          title: Text('Tarefa 1'),
+                          subtitle: Text('20/11/2020'),
+                          leading: Image.asset(
+  'assets/icons/meu_icon.png',
+  width: 30, // Largura do ícone
+  height: 30, // Altura do ícone
+),
+                          onTap: () {
+                            print('Tarefa 1');
+                          },
+                        ),
                       ),
-                      ListTile(
-                        title: Text('Tarefa 2'),
-                        subtitle: Text('20/11/2020'),
-                        leading: Icon(
-                          Icons.person,
-                          size: 30,
+                      SizedBox(height: 8), // Espaço entre os itens da lista
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xffdbebeb), // Cor de fundo do Container
+                          border: Border.all(
+                            color: Colors.grey, // Cor da borda
+                            width: 1.0, // Largura da borda
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              8.0), // Raio do canto da borda
                         ),
-                        onTap: () {
-                          print('Tarefa 2');
-                        },
+                        child: ListTile(
+                          title: Text('Tarefa 1'),
+                          subtitle: Text('20/11/2020'),
+                          leading: Icon(
+                            Icons.save,
+                            size: 30,
+                          ),
+                          onTap: () {
+                            print('Tarefa 1');
+                          },
+                        ),
                       ),
                     ],
                   ),
