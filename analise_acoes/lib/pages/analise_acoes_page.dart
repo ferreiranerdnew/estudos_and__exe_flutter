@@ -84,7 +84,12 @@ class _TodoListPageState extends State<TodoListPage> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () {
-                        Scene();
+                        
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Scene()),
+                            );
                       
                         // Ação ao pressionar o botão elevado com ícone
                       },
