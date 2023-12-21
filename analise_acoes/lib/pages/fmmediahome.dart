@@ -1,7 +1,7 @@
 import 'package:analise_acoes/pages/analise_acoes_page.dart';
-import 'package:analise_acoes/wigets/analise_acoes_item.dart';
+// import 'package:analise_acoes/wigets/analise_acoes_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
+// import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:analise_acoes/utils.dart';
 import 'package:http/http.dart' as http;
@@ -193,20 +193,19 @@ class _SceneMediaState extends State<SceneMedia> {
                     final url = Uri.parse(
                         'http://191.252.200.156:81/acoesboxplot?usuario=appFNB3&senha=SOSlgQOQqlYMXA((i1U2E3909875367****jhbdfb&acoes=$acoes&inicio=$inicio');
 
- 
-     showDialog(
-      context: context,
-      barrierDismissible: false, // Impede o fechamento do diálogo ao tocar fora dele
-      builder: (BuildContext context) {
-        return Center(
-          child: CircularProgressIndicator(), // Indicador de progresso circular
-        );
-      },
-    );
- 
- 
- 
- 
+                    // RF Colocando um ponto de espera para o usuario um circulo de processamento
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Impede o fechamento do diálogo ao tocar fora dele
+                      builder: (BuildContext context) {
+                        return Center(
+                          child:
+                              CircularProgressIndicator(), // Indicador de progresso circular
+                        );
+                      },
+                    );
+
                     try {
                       final response = await http.get(url);
 
@@ -313,7 +312,7 @@ class _SceneMediaState extends State<SceneMedia> {
     );
   }
 
-// RF inicio configuração do modal onde é apresentado o gráfico
+// RF inicio configuração do modal onde é apresentando o gráfico
   void showChartModal(BuildContext context, dynamic responseData) {
     List<_ChartData> fetchedData = [];
 
