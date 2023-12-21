@@ -194,8 +194,7 @@ class _SceneMediaState extends State<SceneMedia> {
                         'http://191.252.200.156:81/acoesboxplot?usuario=appFNB3&senha=SOSlgQOQqlYMXA((i1U2E3909875367****jhbdfb&acoes=$acoes&inicio=$inicio');
 
                     try {
-                      final response = await http.get(url);
-                      print(response.statusCode);
+                      final response = await http.get(url);                      
 
                       if (response.statusCode == 200) {
                         final responseData = json.decode(response.body);
@@ -204,7 +203,35 @@ class _SceneMediaState extends State<SceneMedia> {
                         // Navegue para a próxima página passando os dados brutos
                         showChartModal(context, responseData);
                       } else {
-                        // Trate os casos onde a resposta não é bem-sucedida
+  // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Alerta"),
+      content: Row(
+        children: [
+          Icon(
+            Icons.error_outline, // Ícone de alerta
+            color: Colors.red, // Cor do ícone (opcional)
+          ),
+          SizedBox(width: 8), // Espaçamento entre o ícone e o texto
+          Text("Verificar o ticket \n da empresa !!"),
+        ],
+      ),
+        actions:[
+          TextButton(
+            onPressed: () {
+              // fechar o dialogo sem nenhuma mudança pelo botão cancelar
+              Navigator.of(context).pop();
+            },
+            style: TextButton.styleFrom(foregroundColor: Color(0xff00d7f3)),
+            child: Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
                       }
                     } catch (e) {
                       // Trate os erros que possam ocorrer durante a requisição
