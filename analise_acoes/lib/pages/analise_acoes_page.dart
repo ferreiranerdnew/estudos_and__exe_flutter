@@ -201,6 +201,15 @@ class _TodoListPageState extends State<TodoListPage> {
             ),
           ),
         ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     // Ação ao pressionar o botão flutuante (adicionar novo item, por exemplo)
+        //   },
+        //   child: Icon(Icons.add), // Ícone do botão flutuante (pode ser personalizado)
+        //   backgroundColor: Colors.blue, // Cor de fundo do botão flutuante
+        // ),
+
+
       ),
     );
   }
