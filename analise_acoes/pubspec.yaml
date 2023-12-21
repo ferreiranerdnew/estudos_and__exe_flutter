@@ -73,6 +73,7 @@ flutter:
     - assets/page-1/images/logofnb3comborda.png
     - assets/page-1/images/analytics_graph_bar_icon.png
     - assets/page-1/images/iconhomeazul-1.png
+    - assets/page-1/images/icons8investimento-1.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

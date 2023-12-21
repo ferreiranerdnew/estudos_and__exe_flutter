@@ -37,7 +37,7 @@ class _SceneMediaState extends State<SceneMedia> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.todoTitle);
+    // print(widget.todoTitle);
     const myTextColor = Color(0xff575f61);
     double baseWidth = 430;
     double fem = MediaQuery.of(context).size.width / baseWidth;

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:analise_acoes/utils.dart';
 
 class Scene extends StatelessWidget {
   const Scene({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const myTextColor = Color(0xff575f61);
+    double baseWidth = 430;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -19,7 +24,7 @@ class Scene extends StatelessWidget {
                 ),
               ),
             ],
-          ),
+          ),          
         ),
         body: Center(
           child: Padding(
@@ -39,16 +44,25 @@ class Scene extends StatelessWidget {
                             width: 1.0, // Largura da borda
                           ),
                           borderRadius: BorderRadius.circular(
-                              8.0), // Raio do canto da borda
+                              24.0), // Raio do canto da borda
                         ),
                         child: ListTile(
-                          title: Text('Tarefa 1'),
-                          subtitle: Text('20/11/2020'),
+                          title: Text(
+                            'Média',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 30 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
+                          subtitle: Text('Ações'),
                           leading: Image.asset(
-  'assets/icons/meu_icon.png',
-  width: 30, // Largura do ícone
-  height: 30, // Altura do ícone
-),
+                            'assets/page-1/images/icons8investimento-1.png',
+                            width: 40, // Largura do ícone
+                            height: 40, // Altura do ícone
+                          ),
                           onTap: () {
                             print('Tarefa 1');
                           },
@@ -63,7 +77,7 @@ class Scene extends StatelessWidget {
                             width: 1.0, // Largura da borda
                           ),
                           borderRadius: BorderRadius.circular(
-                              8.0), // Raio do canto da borda
+                              24.0), // Raio do canto da borda
                         ),
                         child: ListTile(
                           title: Text('Tarefa 1'),
