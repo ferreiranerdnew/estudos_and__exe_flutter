@@ -24,7 +24,7 @@ class Scene extends StatelessWidget {
                 ),
               ),
             ],
-          ),          
+          ),
         ),
         body: Center(
           child: Padding(
@@ -57,7 +57,16 @@ class Scene extends StatelessWidget {
                               color: myTextColor,
                             ),
                           ),
-                          subtitle: Text('Ações'),
+                          subtitle: Text(
+                            'Ações',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 22 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
                           leading: Image.asset(
                             'assets/page-1/images/icons8investimento-1.png',
                             width: 40, // Largura do ícone
@@ -80,17 +89,123 @@ class Scene extends StatelessWidget {
                               24.0), // Raio do canto da borda
                         ),
                         child: ListTile(
-                          title: Text('Tarefa 1'),
-                          subtitle: Text('20/11/2020'),
-                          leading: Icon(
-                            Icons.save,
-                            size: 30,
+                          title: Text(
+                            'Matriz',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 30 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'Correlação',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 22 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
+                          leading: Image.asset(
+                            'assets/page-1/images/icons8investcorrelacao-1.png',
+                            width: 40, // Largura do ícone
+                            height: 40, // Altura do ícone
                           ),
                           onTap: () {
                             print('Tarefa 1');
                           },
                         ),
                       ),
+                      // BUG
+                      SizedBox(height: 8), // Espaço entre os itens da lista
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xffdbebeb), // Cor de fundo do Container
+                          border: Border.all(
+                            color: Colors.grey, // Cor da borda
+                            width: 1.0, // Largura da borda
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              24.0), // Raio do canto da borda
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            'Média',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 30 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'Ações',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 22 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
+                          leading: Image.asset(
+                            'assets/page-1/images/icons8investimento-1.png',
+                            width: 40, // Largura do ícone
+                            height: 40, // Altura do ícone
+                          ),
+                          onTap: () {
+                            print('Tarefa 1');
+                          },
+                        ),
+                      ),
+                      // BUG
+                      SizedBox(height: 8), // Espaço entre os itens da lista
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xffdbebeb), // Cor de fundo do Container
+                          border: Border.all(
+                            color: Colors.grey, // Cor da borda
+                            width: 1.0, // Largura da borda
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              24.0), // Raio do canto da borda
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            'Média',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 30 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
+                          subtitle: Text(
+                            'Ações',
+                            style: SafeGoogleFont(
+                              'Irish Grover',
+                              fontSize: 22 * ffem,
+                              fontWeight: FontWeight.w400,
+                              height: 1.21 * ffem / fem,
+                              color: myTextColor,
+                            ),
+                          ),
+                          leading: Image.asset(
+                            'assets/page-1/images/icons8investimento-1.png',
+                            width: 40, // Largura do ícone
+                            height: 40, // Altura do ícone
+                          ),
+                          onTap: () {
+                            print('Tarefa 1');
+                          },
+                        ),
+                      ),
+                      // BUG
                     ],
                   ),
                 ),
