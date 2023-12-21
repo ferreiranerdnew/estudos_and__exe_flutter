@@ -1,3 +1,4 @@
+import 'package:analise_acoes/pages/analise_acoes_page.dart';
 import 'package:flutter/material.dart';
 import 'package:analise_acoes/utils.dart';
 
@@ -73,14 +74,19 @@ class Scene extends StatelessWidget {
                             height: 40, // Altura do ícone
                           ),
                           onTap: () {
-                            print('Tarefa 1');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => TodoListPage()),
+                            );
                           },
                         ),
                       ),
                       SizedBox(height: 8), // Espaço entre os itens da lista
                       Container(
                         decoration: BoxDecoration(
-                          color: Color(0xffdbebeb), // Cor de fundo do Container
+                          color: Color(0xffdbebeb).withOpacity(
+                              0.2), // Reduzindo a opacidade para 50%, // Cor de fundo do Containeror de fundo do Container
                           border: Border.all(
                             color: Colors.grey, // Cor da borda
                             width: 1.0, // Largura da borda
@@ -114,16 +120,15 @@ class Scene extends StatelessWidget {
                             width: 40, // Largura do ícone
                             height: 40, // Altura do ícone
                           ),
-                          onTap: () {
-                            print('Tarefa 1');
-                          },
+                          onTap: null,
                         ),
                       ),
                       // BUG
                       SizedBox(height: 8), // Espaço entre os itens da lista
                       Container(
                         decoration: BoxDecoration(
-                          color: Color(0xffdbebeb), // Cor de fundo do Container
+                          color: Color(0xffdbebeb).withOpacity(
+                              0.2), // Reduzindo a opacidade para 50%, // Cor de fundo do Container
                           border: Border.all(
                             color: Colors.grey, // Cor da borda
                             width: 1.0, // Largura da borda
@@ -133,7 +138,7 @@ class Scene extends StatelessWidget {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Média',
+                            'Previsão',
                             style: SafeGoogleFont(
                               'Irish Grover',
                               fontSize: 30 * ffem,
@@ -143,7 +148,7 @@ class Scene extends StatelessWidget {
                             ),
                           ),
                           subtitle: Text(
-                            'Ações',
+                            'Preço Futuro',
                             style: SafeGoogleFont(
                               'Irish Grover',
                               fontSize: 22 * ffem,
@@ -153,20 +158,19 @@ class Scene extends StatelessWidget {
                             ),
                           ),
                           leading: Image.asset(
-                            'assets/page-1/images/icons8investimento-1.png',
+                            'assets/page-1/images/bolaprecofuturoprevisao-1.png',
                             width: 40, // Largura do ícone
                             height: 40, // Altura do ícone
                           ),
-                          onTap: () {
-                            print('Tarefa 1');
-                          },
+                          onTap: null,
                         ),
                       ),
                       // BUG
                       SizedBox(height: 8), // Espaço entre os itens da lista
                       Container(
                         decoration: BoxDecoration(
-                          color: Color(0xffdbebeb), // Cor de fundo do Container
+                          color: Color(0xffdbebeb).withOpacity(
+                              0.2), // Reduzindo a opacidade para 50%, // Cor de fundo do Container
                           border: Border.all(
                             color: Colors.grey, // Cor da borda
                             width: 1.0, // Largura da borda
@@ -176,7 +180,7 @@ class Scene extends StatelessWidget {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Média',
+                            'Carteira',
                             style: SafeGoogleFont(
                               'Irish Grover',
                               fontSize: 30 * ffem,
@@ -186,7 +190,7 @@ class Scene extends StatelessWidget {
                             ),
                           ),
                           subtitle: Text(
-                            'Ações',
+                            'Investimento',
                             style: SafeGoogleFont(
                               'Irish Grover',
                               fontSize: 22 * ffem,
@@ -196,13 +200,11 @@ class Scene extends StatelessWidget {
                             ),
                           ),
                           leading: Image.asset(
-                            'assets/page-1/images/icons8investimento-1.png',
+                            'assets/page-1/images/icons8carteira64-1.png',
                             width: 40, // Largura do ícone
                             height: 40, // Altura do ícone
                           ),
-                          onTap: () {
-                            print('Tarefa 1');
-                          },
+                          onTap: null,
                         ),
                       ),
                       // BUG

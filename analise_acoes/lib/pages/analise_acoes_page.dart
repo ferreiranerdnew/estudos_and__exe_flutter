@@ -58,7 +58,7 @@ class _TodoListPageState extends State<TodoListPage> {
                   'assets/page-1/images/logofnb3comborda.png',
                   fit: BoxFit.contain,
                 ),
-              ),
+              ),              
             ],
           ),
         ),
