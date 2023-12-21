@@ -77,6 +77,7 @@ flutter:
     - assets/page-1/images/icons8carteira64-1.png
     - assets/page-1/images/bolaprecofuturoprevisao-1.png
     - assets/page-1/images/icons8investcorrelacao-1.png
+    - assets/page-1/images/icons8retornar100-1.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -4,10 +4,12 @@ passar informações de item pais para filhos ou vice versa
 do pai para o filho : sempre passar atravez d eum parametro
 do filho para o pai : utilizar um callback
  */
+import 'package:analise_acoes/pages/fmprincipal.dart';
 import 'package:flutter/material.dart';
 import 'package:analise_acoes/models/todo.dart';
 import 'package:analise_acoes/repositories/todo_repository.dart';
 import 'package:analise_acoes/wigets/analise_acoes_item.dart';
+import 'package:analise_acoes/utils.dart';
 
 // import 'dart:typed_data';
 // import 'package:myapp/main.dart';
@@ -45,6 +47,10 @@ class _TodoListPageState extends State<TodoListPage> {
 
   @override
   Widget build(BuildContext context) {
+    const myTextColor = Color(0xff575f61);
+    double baseWidth = 430;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
     // RF 01 CORRIGIR OS ELEMENTOS QUE PASSA ACIMA DA SINFORMAÇÕES DO CELULAR COLOCAR O Scaffold DENTRO DE UM WIGET SafeArea, vai manter dentro da area segura do dispositivo
     return SafeArea(
       child: Scaffold(
@@ -58,7 +64,7 @@ class _TodoListPageState extends State<TodoListPage> {
                   'assets/page-1/images/logofnb3comborda.png',
                   fit: BoxFit.contain,
                 ),
-              ),              
+              ),
             ],
           ),
         ),
@@ -72,6 +78,42 @@ class _TodoListPageState extends State<TodoListPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment
+                      .start, // Alinhamento no início (lado esquerdo)
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Scene();
+                      
+                        // Ação ao pressionar o botão elevado com ícone
+                      },
+                      icon: Image.asset(
+                        'assets/page-1/images/icons8retornar100-1.png', // Caminho do seu ícone nos ativos
+                        width: 30, // Largura do ícone
+                        height: 30, // Altura do ícone
+                      ),
+                      label: Text(
+                        'Retornar\n  Home',
+                        style: SafeGoogleFont(
+                          'Irish Grover',
+                          fontSize: 17 * ffem,
+                          fontWeight: FontWeight.w400,
+                          height: 1.21 * ffem / fem,
+                          color: myTextColor,
+                        ),
+                      ), // Texto ao lado do ícone
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors
+                            .transparent, // Tornando a cor do botão transparente
+                        elevation: 0, // Removendo sombra
+                        // Outros atributos que você deseja definir
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
@@ -98,10 +140,11 @@ class _TodoListPageState extends State<TodoListPage> {
                     SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () {
-                        // RF onPressed; shared_preferences; toUpperCase(),trim() 
+                        // RF onPressed; shared_preferences; toUpperCase(),trim()
                         //  pegando a informação digitada na labal
                         String text = todoController.text
-                            .toUpperCase().trim(); // Converte para maiúsculas, trim() retira todos os espaços em branco
+                            .toUpperCase()
+                            .trim(); // Converte para maiúsculas, trim() retira todos os espaços em branco
                         //verificar se o labal esta empty caso seja true retornar um erro
                         if (text.isEmpty) {
                           setState(() {
@@ -147,6 +190,7 @@ class _TodoListPageState extends State<TodoListPage> {
                   ],
                 ),
                 SizedBox(height: 16),
+
                 // RF SizedBox; listviwer; scroll; buttom; variaveis; length = len;
                 //  Criando a listviwer
                 //  o SizedBox tambem é um widget e serve para deter minar a largura de outros objetos,muitas veze sutilizamos como um widget vazio
@@ -208,8 +252,6 @@ class _TodoListPageState extends State<TodoListPage> {
         //   child: Icon(Icons.add), // Ícone do botão flutuante (pode ser personalizado)
         //   backgroundColor: Colors.blue, // Cor de fundo do botão flutuante
         // ),
-
-
       ),
     );
   }
