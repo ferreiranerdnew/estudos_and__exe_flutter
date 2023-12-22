@@ -3,7 +3,9 @@
 passar informações de item pais para filhos ou vice versa
 do pai para o filho : sempre passar atravez d eum parametro
 do filho para o pai : utilizar um callback
+
  */
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:analise_acoes/pages/fmprincipal.dart';
 import 'package:flutter/material.dart';
 import 'package:analise_acoes/models/todo.dart';
@@ -17,12 +19,17 @@ import 'package:analise_acoes/utils.dart';
 class TodoListPage extends StatefulWidget {
   TodoListPage({Key? key}) : super(key: key);
 
+
+
+
   @override
   State<TodoListPage> createState() => _TodoListPageState();
 }
 
 class _TodoListPageState extends State<TodoListPage> {
   final TextEditingController todoController = TextEditingController();
+    // RF Instanciando anuncio GOOGLE ADMOB
+  InterstitialAd? _interstitialAd;
 
   //recebendo informações persistidas do shared_preferences
   final TodoRepository todoRepository_1 = TodoRepository();
@@ -43,6 +50,7 @@ class _TodoListPageState extends State<TodoListPage> {
         todos = value;
       });
     });
+    _createInterstitialAd();        
   }
 
   @override
@@ -340,4 +348,46 @@ class _TodoListPageState extends State<TodoListPage> {
     //salvando a lista de todos no shared_preferences
     todoRepository_1.saveTodoList(todos);
   }
+
+// RF GOOGLE ADMOB 22/12/2023
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (InterstitialAd ad) {
+            // debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            this._interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+  void _showInterstitialAd(){
+    if(_interstitialAd== null){
+      print('Anuncio Null');
+      return;
+    }
+    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) => 
+      print('%ad onAdShowedFullScreenContent 2'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad){
+        print('$ad onAdDismissedFullScreenContent. 3 ');
+        ad.dispose();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error){
+        print('$ad onAdFailedToShowFullScreenContent 4: $error');
+        ad.dispose();
+      },
+      onAdImpression: (InterstitialAd ad) => print('$ad impression ocurred 5.'),
+
+    );
+    _interstitialAd.show();      
+    
+  }
+
 }
