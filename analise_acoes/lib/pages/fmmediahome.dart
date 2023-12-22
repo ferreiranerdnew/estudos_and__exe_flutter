@@ -1,3 +1,4 @@
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:analise_acoes/pages/analise_acoes_page.dart';
 // import 'package:analise_acoes/wigets/analise_acoes_item.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:math';
 
 class SceneMedia extends StatefulWidget {
+
+
   final String todoTitle;
 
   SceneMedia({required this.todoTitle});
@@ -401,6 +404,34 @@ class _SceneMediaState extends State<SceneMedia> {
       ),
     );
   }
+
+
+// RF GOOGLE ADMOB 22/12/2023
+void _createInterstitialAd(){
+      InterstitialAd.load(
+        adUnitId: adUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            // Keep a reference to the ad so you can show it later.
+            _interstitialAd = ad;
+          },
+          // Called when an ad request failed.
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('InterstitialAd failed to load: $error');
+          },
+        ));
+  }
+
+
+
+
+
+
+
+
 }
 
 class _ChartData {

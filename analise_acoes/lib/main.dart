@@ -6,7 +6,7 @@ import 'package:analise_acoes/pages/analise_acoes_page.dart';
 import 'pages/fmprincipal.dart';
 
 void main(){
-  //RF 22/12/2023 Google Admob
+  // //RF 22/12/2023 Google Admob
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
 
