@@ -24,10 +24,9 @@ class _SceneMediaState extends State<SceneMedia> {
   late List<_ChartData> data = [];
   late TextEditingController _dataController;
   late DateTime initialDate;
-    // RF Instanciando anuncio GOOGLE ADMOB
+  // RF Instanciando anuncio GOOGLE ADMOB
   // InterstitialAd? _interstitialAd;
-    final AdMobManager admobManager = AdMobManager(); // Instancie a classe
-
+  final AdMobManager admobManager = AdMobManager(); // Instancie a classe
 
   @override
   void initState() {
@@ -41,8 +40,6 @@ class _SceneMediaState extends State<SceneMedia> {
     _dataController.text = initialFormattedDate;
     admobManager.createInterstitialAd();
     //  _createInterstitialAd();
-    
-    
   }
   // _showInterstitialAd();
 
@@ -86,7 +83,6 @@ class _SceneMediaState extends State<SceneMedia> {
                     color: myTextColor,
                   ),
                 ),
-                
               ),
 
               Container(
@@ -355,9 +351,10 @@ class _SceneMediaState extends State<SceneMedia> {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
+                    // RF Google ADMOB 22/12/2023 19:13
+                    // Primeiro, crie o anúncio
                     // _showInterstitialAd();
-    // Primeiro, crie o anúncio
-admobManager.showInterstitialAd();
+                    admobManager.showInterstitialAd();
                     Navigator.of(context).pop(); // Fechar o modal
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
@@ -456,10 +453,6 @@ admobManager.showInterstitialAd();
 //     );
 //     _interstitialAd!.show();
 //   }
-
-
-
-
 }
 
 class _ChartData {
