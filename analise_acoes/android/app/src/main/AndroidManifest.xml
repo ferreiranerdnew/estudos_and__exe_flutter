@@ -9,6 +9,8 @@
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> 
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
 
     <application
         android:label="analise_acoes"
@@ -40,5 +42,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- RF Incluido em 22/12/2023 Gooble Admob-->
+        <!-- BUG precisa mudar pelo id que foi criado no ADMOB-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
     </application>
 </manifest>
