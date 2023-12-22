@@ -38,7 +38,9 @@ class _SceneMediaState extends State<SceneMedia> {
 
     _dataController.text = initialFormattedDate;
     _createInterstitialAd();
+    
   }
+  _showInterstitialAd();
 
   @override
   Widget build(BuildContext context) {
@@ -417,7 +419,7 @@ class _SceneMediaState extends State<SceneMedia> {
           onAdLoaded: (ad) {
             debugPrint('$ad loaded.');
             // Keep a reference to the ad so you can show it later.
-            this._interstitialAd = ad;
+            _interstitialAd = ad;
           },
           // Called when an ad request failed.
           onAdFailedToLoad: (LoadAdError error) {
@@ -430,12 +432,21 @@ class _SceneMediaState extends State<SceneMedia> {
       print('Anuncio Null');
       return;
     }
+    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) => 
+      print('%ad onAdShowedFullScreenContent 2'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad){
+        print('$ad onAdDismissedFullScreenContent. 3 ');
+        ad.dispose();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error){
+        print('$ad onAdFailedToShowFullScreenContent 4: $error');
+        ad.dispose();
+      },
+      onAdImpression: (InterstitialAd ad) => print('$ad impression ocurred 5.'),
 
-_interstitialAd?.adLoadCallback: InterstitialAdLoadCallback(
-          // Called when an ad is successfully received.
-          onAdLoaded: (ad) {
-
-          });
+    );
+    _interstitialAd?.show();      
     
   }
 }
