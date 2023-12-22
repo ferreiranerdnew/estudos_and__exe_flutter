@@ -12,8 +12,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:math';
 
 class SceneMedia extends StatefulWidget {
-
-
   final String todoTitle;
 
   SceneMedia({required this.todoTitle});
@@ -26,6 +24,9 @@ class _SceneMediaState extends State<SceneMedia> {
   late TextEditingController _dataController;
   late DateTime initialDate;
 
+// RF Instanciando anuncio GOOGLE ADMOB
+  InterstitialAd? _interstitialAd;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +37,7 @@ class _SceneMediaState extends State<SceneMedia> {
         "${initialDate.year}-${initialDate.month.toString().padLeft(2, '0')}-${initialDate.day.toString().padLeft(2, '0')}";
 
     _dataController.text = initialFormattedDate;
+    _createInterstitialAd();
   }
 
   @override
@@ -405,18 +407,17 @@ class _SceneMediaState extends State<SceneMedia> {
     );
   }
 
-
 // RF GOOGLE ADMOB 22/12/2023
-void _createInterstitialAd(){
-      InterstitialAd.load(
-        adUnitId: adUnitId,
+  void _createInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
         request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           // Called when an ad is successfully received.
           onAdLoaded: (ad) {
             debugPrint('$ad loaded.');
             // Keep a reference to the ad so you can show it later.
-            _interstitialAd = ad;
+            this._interstitialAd = ad;
           },
           // Called when an ad request failed.
           onAdFailedToLoad: (LoadAdError error) {
@@ -424,14 +425,19 @@ void _createInterstitialAd(){
           },
         ));
   }
+  void _showInterstitialAd(){
+    if(_interstitialAd== null){
+      print('Anuncio Null');
+      return;
+    }
 
+_interstitialAd?.adLoadCallback: InterstitialAdLoadCallback(
+          // Called when an ad is successfully received.
+          onAdLoaded: (ad) {
 
-
-
-
-
-
-
+          });
+    
+  }
 }
 
 class _ChartData {
