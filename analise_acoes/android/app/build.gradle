@@ -24,7 +24,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.analise_acoes"
-    compileSdkVersion flutter.compileSdkVersion
+    // compileSdkVersion flutter.compileSdkVersion  //RF comentado em 22/12/2023
+    compileSdkVersion  33 // TODO: St compileSdkVersion to 28 or higher
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -45,9 +46,11 @@ android {
         applicationId "com.example.analise_acoes"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
+        // minSdkVersion flutter.minSdkVersion //RF comentado em 22/12/2023
+        minSdkVersion 23 // TODO: Target Android API level 20 or hogher
+        // targetSdkVersion flutter.targetSdkVersion //RF comentado em 22/12/2023
+        targetSdkVersion 33
+        versionCode flutterVersionCode.toInteger() 
         versionName flutterVersionName
     }
 
