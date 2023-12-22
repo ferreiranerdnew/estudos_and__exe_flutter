@@ -19,16 +19,13 @@ import 'package:analise_acoes/utils.dart';
 class TodoListPage extends StatefulWidget {
   TodoListPage({Key? key}) : super(key: key);
 
-
-
-
   @override
   State<TodoListPage> createState() => _TodoListPageState();
 }
 
 class _TodoListPageState extends State<TodoListPage> {
   final TextEditingController todoController = TextEditingController();
-    // RF Instanciando anuncio GOOGLE ADMOB
+  // RF Instanciando anuncio GOOGLE ADMOB
   InterstitialAd? _interstitialAd;
 
   //recebendo informações persistidas do shared_preferences
@@ -50,7 +47,7 @@ class _TodoListPageState extends State<TodoListPage> {
         todos = value;
       });
     });
-    _createInterstitialAd();        
+    _createInterstitialAd();
   }
 
   @override
@@ -92,13 +89,11 @@ class _TodoListPageState extends State<TodoListPage> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () {
-                        
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Scene()),
-                            );
-                      
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Scene()),
+                        );
+
                         // Ação ao pressionar o botão elevado com ícone
                       },
                       icon: Image.asset(
@@ -367,27 +362,25 @@ class _TodoListPageState extends State<TodoListPage> {
           },
         ));
   }
-  void _showInterstitialAd(){
-    if(_interstitialAd== null){
+
+  void _showInterstitialAd() {
+    if (_interstitialAd == null) {
       print('Anuncio Null');
       return;
     }
     _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) => 
-      print('%ad onAdShowedFullScreenContent 2'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad){
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('%ad onAdShowedFullScreenContent 2'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
         print('$ad onAdDismissedFullScreenContent. 3 ');
         ad.dispose();
       },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error){
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
         print('$ad onAdFailedToShowFullScreenContent 4: $error');
         ad.dispose();
       },
       onAdImpression: (InterstitialAd ad) => print('$ad impression ocurred 5.'),
-
     );
-    _interstitialAd.show();      
-    
+    _interstitialAd!.show();
   }
-
 }
