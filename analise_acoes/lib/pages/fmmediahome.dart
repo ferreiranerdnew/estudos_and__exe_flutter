@@ -1,3 +1,4 @@
+import 'package:analise_acoes/models/admob_manager.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:analise_acoes/pages/analise_acoes_page.dart';
 // import 'package:analise_acoes/wigets/analise_acoes_item.dart';
@@ -24,7 +25,9 @@ class _SceneMediaState extends State<SceneMedia> {
   late TextEditingController _dataController;
   late DateTime initialDate;
     // RF Instanciando anuncio GOOGLE ADMOB
-  InterstitialAd? _interstitialAd;
+  // InterstitialAd? _interstitialAd;
+    final AdMobManager admobManager = AdMobManager(); // Instancie a classe
+
 
   @override
   void initState() {
@@ -36,7 +39,8 @@ class _SceneMediaState extends State<SceneMedia> {
         "${initialDate.year}-${initialDate.month.toString().padLeft(2, '0')}-${initialDate.day.toString().padLeft(2, '0')}";
 
     _dataController.text = initialFormattedDate;
-     _createInterstitialAd();
+    admobManager.createInterstitialAd();
+    //  _createInterstitialAd();
     
     
   }
@@ -351,7 +355,9 @@ class _SceneMediaState extends State<SceneMedia> {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    _showInterstitialAd();
+                    // _showInterstitialAd();
+    // Primeiro, crie o anúncio
+admobManager.showInterstitialAd();
                     Navigator.of(context).pop(); // Fechar o modal
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) =>
@@ -411,45 +417,45 @@ class _SceneMediaState extends State<SceneMedia> {
     );
   }
 
-// RF GOOGLE ADMOB 22/12/2023
-  void _createInterstitialAd() {
-    InterstitialAd.load(
-        adUnitId: 'ca-app-pub-3940256099942544/1033173712',
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(
-          // Called when an ad is successfully received.
-          onAdLoaded: (InterstitialAd ad) {
-            // debugPrint('$ad loaded.');
-            // Keep a reference to the ad so you can show it later.
-            this._interstitialAd = ad;
-          },
-          // Called when an ad request failed.
-          onAdFailedToLoad: (LoadAdError error) {
-            debugPrint('InterstitialAd failed to load: $error');
-          },
-        ));
-  }
+// // RF GOOGLE ADMOB 22/12/2023
+//   void _createInterstitialAd() {
+//     InterstitialAd.load(
+//         adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+//         request: const AdRequest(),
+//         adLoadCallback: InterstitialAdLoadCallback(
+//           // Called when an ad is successfully received.
+//           onAdLoaded: (InterstitialAd ad) {
+//             // debugPrint('$ad loaded.');
+//             // Keep a reference to the ad so you can show it later.
+//             this._interstitialAd = ad;
+//           },
+//           // Called when an ad request failed.
+//           onAdFailedToLoad: (LoadAdError error) {
+//             debugPrint('InterstitialAd failed to load: $error');
+//           },
+//         ));
+//   }
 
-  void _showInterstitialAd() {
-    if (_interstitialAd == null) {
-      print('Anuncio Null');
-      return;
-    }
-    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('%ad onAdShowedFullScreenContent 2'),
-      onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad onAdDismissedFullScreenContent. 3 ');
-        ad.dispose();
-      },
-      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent 4: $error');
-        ad.dispose();
-      },
-      onAdImpression: (InterstitialAd ad) => print('$ad impression ocurred 5.'),
-    );
-    _interstitialAd!.show();
-  }
+//   void _showInterstitialAd() {
+//     if (_interstitialAd == null) {
+//       print('Anuncio Null');
+//       return;
+//     }
+//     _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
+//       onAdShowedFullScreenContent: (InterstitialAd ad) =>
+//           print('%ad onAdShowedFullScreenContent 2'),
+//       onAdDismissedFullScreenContent: (InterstitialAd ad) {
+//         print('$ad onAdDismissedFullScreenContent. 3 ');
+//         ad.dispose();
+//       },
+//       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+//         print('$ad onAdFailedToShowFullScreenContent 4: $error');
+//         ad.dispose();
+//       },
+//       onAdImpression: (InterstitialAd ad) => print('$ad impression ocurred 5.'),
+//     );
+//     _interstitialAd!.show();
+//   }
 
 
 
