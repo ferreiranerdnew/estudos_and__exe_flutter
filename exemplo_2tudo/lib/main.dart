@@ -27,6 +27,7 @@ class _MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<_MyHomePage> {
   late TooltipBehavior _tooltip;
   late List<ChartData1> histogramData = [];
+  late List<HistogramData> _histogramData = [];
 
   @override
   void initState() {
