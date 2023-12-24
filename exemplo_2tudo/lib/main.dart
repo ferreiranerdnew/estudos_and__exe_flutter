@@ -137,7 +137,7 @@ class _ChartApp extends StatelessWidget {
                   showNormalDistributionCurve: true,
                   curveColor: const Color.fromRGBO(192, 108, 132, 1),
                   binInterval: 10, // Intervalo de 10 para os dados
-                  xValueMapper: (HistogramData data, _) => data.range,
+                  // fieldName: 'range', // Mapeamento do eixo x
                   yValueMapper: (HistogramData data, _) => data.frequency.toDouble(),
                 ),
               ],
@@ -161,3 +161,6 @@ class HistogramData {
 
   HistogramData(this.range, this.frequency);
 }
+
+
+
