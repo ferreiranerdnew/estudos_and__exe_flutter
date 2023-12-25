@@ -29,14 +29,20 @@ class _ChartApp extends StatelessWidget {
     ];
 
     return SfCartesianChart(
+      primaryXAxis: NumericAxis(
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
+        minimum: 0, // Valor mínimo do eixo x
+        maximum: 30, // Valor máximo do eixo x
+        interval: 1, // Intervalo entre os rótulos no eixo x
+      ),
       series: <HistogramSeries<SalesData, num>>[
         HistogramSeries<SalesData, num>(
           dataSource: chartData,
           yValueMapper: (SalesData sales, _) => sales.value,
-          binInterval: 20,
+          binInterval: 20, // Isso controla o intervalo dos dados, não o eixo x
           showNormalDistributionCurve: true,
           curveColor: const Color.fromRGBO(192, 108, 132, 1),
-          borderWidth: 3
+          borderWidth: 3,
           // Mais configurações podem ser adicionadas aqui
         ),
       ],
