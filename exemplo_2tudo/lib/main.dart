@@ -68,7 +68,8 @@ class _MyHomePageState extends State<_MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-      final Map<String, int> intervalFrequencies = {};
+    // fetchChartData();
+    final Map<String, int> intervalFrequencies = {};
 
     for (final data in histogramData) {
       final interval = (data.value ~/ 10) * 10; // Calcula o intervalo
