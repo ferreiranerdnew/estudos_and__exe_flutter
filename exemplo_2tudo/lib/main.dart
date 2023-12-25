@@ -15,31 +15,56 @@ class _ChartApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Simulando dados aleatórios para o gráfico de histograma
     final List<SalesData> chartData = [
-      SalesData(5),
-      SalesData(7),
-      SalesData(8),
-      SalesData(12),
-      SalesData(15),
-      SalesData(18),
-      SalesData(20),
-      SalesData(22),
-      SalesData(25),
-      SalesData(28),
-      SalesData(30),
+SalesData(33), 
+SalesData(34),
+SalesData(34),
+SalesData(33),
+SalesData(32),
+SalesData(33),
+SalesData(33),
+SalesData(34),
+SalesData(34),
+SalesData(34),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(34),
+SalesData(34),
+SalesData(33),
+SalesData(33),
+SalesData(34),
+SalesData(34),
+SalesData(34),
+SalesData(34),
+SalesData(35),
+SalesData(35),
+SalesData(35),
+SalesData(36),
+SalesData(36),
+SalesData(36),
+SalesData(36)
     ];
 
     return SfCartesianChart(
       primaryXAxis: NumericAxis(
         edgeLabelPlacement: EdgeLabelPlacement.shift,
-        minimum: 0, // Valor mínimo do eixo x
-        maximum: 30, // Valor máximo do eixo x
-        interval: 1, // Intervalo entre os rótulos no eixo x
+        minimum: 30, // Valor mínimo do eixo x
+        maximum: 50, // Valor máximo do eixo x
+        interval: 2, // Intervalo entre os rótulos no eixo x
       ),
       series: <HistogramSeries<SalesData, num>>[
         HistogramSeries<SalesData, num>(
           dataSource: chartData,
           yValueMapper: (SalesData sales, _) => sales.value,
-          binInterval: 20, // Isso controla o intervalo dos dados, não o eixo x
+          binInterval: 1, // Isso controla o intervalo dos dados, não o eixo x
           showNormalDistributionCurve: true,
           curveColor: const Color.fromRGBO(192, 108, 132, 1),
           borderWidth: 3,
