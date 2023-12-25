@@ -5,12 +5,12 @@ void main() {
   runApp(MaterialApp(
     home: Scaffold(
       appBar: AppBar(title: Text('Histogram Chart Example')),
-      body: Center(child: HistogramChart()),
+      body: Center(child: _ChartApp()),
     ),
   ));
 }
 
-class HistogramChart extends StatelessWidget {
+class _ChartApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Simulando dados aleatórios para o gráfico de histograma
@@ -33,7 +33,10 @@ class HistogramChart extends StatelessWidget {
         HistogramSeries<SalesData, num>(
           dataSource: chartData,
           yValueMapper: (SalesData sales, _) => sales.value,
-          binInterval: 5,
+          binInterval: 20,
+          showNormalDistributionCurve: true,
+          curveColor: const Color.fromRGBO(192, 108, 132, 1),
+          borderWidth: 3
           // Mais configurações podem ser adicionadas aqui
         ),
       ],
