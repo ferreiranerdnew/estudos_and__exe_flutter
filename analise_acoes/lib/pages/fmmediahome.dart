@@ -23,8 +23,9 @@ class SceneMedia extends StatefulWidget {
 class _SceneMediaState extends State<SceneMedia> {
   late List<_ChartData> data = [];
   late TextEditingController _dataController;
+  late TextEditingController _dataControllerFim;
   late DateTime initialDate;
-  late DateTime fim_Date ;
+  late DateTime fim_Date;
   // RF Instanciando anuncio GOOGLE ADMOB
   // InterstitialAd? _interstitialAd;
   final AdMobManager admobManager = AdMobManager(); // Instancie a classe
@@ -33,6 +34,7 @@ class _SceneMediaState extends State<SceneMedia> {
   void initState() {
     super.initState();
     _dataController = TextEditingController();
+    _dataControllerFim = TextEditingController();
     initialDate = DateTime.now().subtract(Duration(days: 60));
     fim_Date = DateTime.now();
 
@@ -41,9 +43,10 @@ class _SceneMediaState extends State<SceneMedia> {
     
     String fimFormattedDate =
        "${fim_Date.year}-${fim_Date.month.toString().padLeft(2, '0')}-${fim_Date.day.toString().padLeft(2, '0')}";
-    print(fimFormattedDate);
+    // print(fimFormattedDate);
 
     _dataController.text = initialFormattedDate;
+    _dataControllerFim.text = fimFormattedDate;
     admobManager.createInterstitialAd();
     //  _createInterstitialAd();
   }
@@ -121,7 +124,7 @@ class _SceneMediaState extends State<SceneMedia> {
                 ),
               ),
 
-              // BUG escolhendo a data
+              // BUG escolhendo a data Inicio
               ElevatedButton(
                 onPressed: () async {
                   final DateTime? pickedDate = await showDatePicker(
@@ -196,7 +199,7 @@ class _SceneMediaState extends State<SceneMedia> {
                 onPressed: () async {
                   final DateTime? pickedDate = await showDatePicker(
                     context: context,
-                    initialDate: initialDate,
+                    initialDate: fim_Date,
                     firstDate: DateTime(DateTime.now().year - 10),
                     lastDate: DateTime(DateTime.now().year + 10),
                     // locale: const Locale('pt', 'BR'),
@@ -205,7 +208,7 @@ class _SceneMediaState extends State<SceneMedia> {
                   if (pickedDate != null) {
                     String formattedDate =
                         "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-                    _dataController.text = formattedDate;
+                    _dataControllerFim.text = formattedDate;
                   }
                 },
                 style: ButtonStyle(
@@ -222,7 +225,7 @@ class _SceneMediaState extends State<SceneMedia> {
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
-                    controller: _dataController,
+                    controller: _dataControllerFim,
                     decoration: InputDecoration(
                       labelText: 'Data Fim',
                       labelStyle: TextStyle(
@@ -255,7 +258,7 @@ class _SceneMediaState extends State<SceneMedia> {
                       if (pickedDate != null) {
                         String formattedDate =
                             "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-                        _dataController.text = formattedDate;
+                        _dataControllerFim.text = formattedDate;
                       }
                     },
                   ),
