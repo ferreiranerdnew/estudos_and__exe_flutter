@@ -148,8 +148,8 @@ class _SceneMediaState extends State<SceneMedia> {
                   child: TextFormField(
                     controller: _dataController,
                     decoration: InputDecoration(
-                      hintText: 'Data Início da Análise',
-                      hintStyle: TextStyle(
+                      labelText: 'Data Início',
+                      labelStyle: TextStyle(
                         fontFamily: 'Irish Grover',
                         fontSize: 16 * ffem,
                         fontWeight: FontWeight.w400,
@@ -185,7 +185,7 @@ class _SceneMediaState extends State<SceneMedia> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Espaço entre os botões
+              const SizedBox(height: 8), // Espaço entre os botões
               SizedBox(
                 height: 68,
                 width: 500,
