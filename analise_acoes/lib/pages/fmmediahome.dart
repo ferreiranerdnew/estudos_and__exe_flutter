@@ -24,6 +24,7 @@ class _SceneMediaState extends State<SceneMedia> {
   late List<_ChartData> data = [];
   late TextEditingController _dataController;
   late DateTime initialDate;
+  late DateTime fim_Date ;
   // RF Instanciando anuncio GOOGLE ADMOB
   // InterstitialAd? _interstitialAd;
   final AdMobManager admobManager = AdMobManager(); // Instancie a classe
@@ -33,9 +34,14 @@ class _SceneMediaState extends State<SceneMedia> {
     super.initState();
     _dataController = TextEditingController();
     initialDate = DateTime.now().subtract(Duration(days: 60));
+    fim_Date = DateTime.now();
 
     String initialFormattedDate =
         "${initialDate.year}-${initialDate.month.toString().padLeft(2, '0')}-${initialDate.day.toString().padLeft(2, '0')}";
+    
+    String fimFormattedDate =
+       "${fim_Date.year}-${fim_Date.month.toString().padLeft(2, '0')}-${fim_Date.day.toString().padLeft(2, '0')}";
+    print(fimFormattedDate);
 
     _dataController.text = initialFormattedDate;
     admobManager.createInterstitialAd();
@@ -149,6 +155,76 @@ class _SceneMediaState extends State<SceneMedia> {
                     controller: _dataController,
                     decoration: InputDecoration(
                       labelText: 'Data Início',
+                      labelStyle: TextStyle(
+                        fontFamily: 'Irish Grover',
+                        fontSize: 16 * ffem,
+                        fontWeight: FontWeight.w400,
+                        height: 1.208984375 * ffem / fem,
+                        color: myTextColor,
+                      ),
+                      border: InputBorder.none,
+                    ),
+                    keyboardType: TextInputType.datetime,
+                    style: TextStyle(
+                      fontFamily: 'Irish Grover',
+                      fontSize: 20 * ffem,
+                      fontWeight: FontWeight.w400,
+                      height: 1.208984375 * ffem / fem,
+                      color: myTextColor,
+                    ),
+                    readOnly: true,
+                    onTap: () async {
+                      final DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: initialDate,
+                        firstDate: DateTime(DateTime.now().year - 5),
+                        lastDate: DateTime(DateTime.now().year + 10),
+                        // locale: const Locale('pt', 'BR'),
+                      );
+
+                      if (pickedDate != null) {
+                        String formattedDate =
+                            "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+                        _dataController.text = formattedDate;
+                      }
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8), // Espaço entre os botões
+              ElevatedButton(
+                onPressed: () async {
+                  final DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: initialDate,
+                    firstDate: DateTime(DateTime.now().year - 10),
+                    lastDate: DateTime(DateTime.now().year + 10),
+                    // locale: const Locale('pt', 'BR'),
+                  );
+
+                  if (pickedDate != null) {
+                    String formattedDate =
+                        "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
+                    _dataController.text = formattedDate;
+                  }
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Color(0xffdbebeb)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(36 * fem),
+                    ),
+                  ),
+                ),
+                child: Container(
+                  height: 68 * fem,
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    controller: _dataController,
+                    decoration: InputDecoration(
+                      labelText: 'Data Fim',
                       labelStyle: TextStyle(
                         fontFamily: 'Irish Grover',
                         fontSize: 16 * ffem,
