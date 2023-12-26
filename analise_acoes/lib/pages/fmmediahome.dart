@@ -487,7 +487,7 @@ class _SceneMediaState extends State<SceneMedia> {
                               // List<ChartData1> fetchedData = [];
 
                               // Navegue para a próxima página passando os dados brutos
-                              showChartModal_HITOGRAMA(context, responseData);
+                              showChartModalHistogram(context, responseData);
                             } else {
                               // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
                               showDialog(
@@ -660,83 +660,64 @@ class _SceneMediaState extends State<SceneMedia> {
   }
 
 // RF inicio configuração do modal onde é apresentando o gráfico HITOGRAMA
-  void showChartModal_HITOGRAMA(BuildContext context, dynamic responseData) {
-    List<_ChartData> fetchedData = [];
+void showChartModalHistogram(BuildContext context, dynamic responseData) {
+  List<ChartData1> histogramData = [];
 
+  // Verifica se a estrutura dos dados é adequada para processamento
+  if (responseData is Map<String, dynamic>) {
     responseData.forEach((key, value) {
-      value.forEach((v) {
-        histogramData.add(ChartData1(v));
-      });
+      if (value is List<dynamic>) {
+        value.forEach((v) {
+          if (v is num) {
+            histogramData.add(ChartData1(v.toDouble())); // Adaptar para o formato necessário
+          }
+        });
+      }
     });
-    print(histogramData);
+  }
 
+  // Verificar se há dados válidos para exibir o gráfico
+  if (histogramData.isNotEmpty) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                histogramData.isNotEmpty
-                    ? Column(
-                        children: fetchedData
-                            .map((histogramData) =>
-                                buildIndividualChart_HIST(histogramData))
-                            .toList(),
-                      )
-                    : const Text('Sem dados para exibir2'),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // RF Google ADMOB 22/12/2023 19:13
-                    // Primeiro, crie o anúncio
-                    // _showInterstitialAd();
-                    admobManager.showInterstitialAd();
-                    Navigator.of(context).pop(); // Fechar o modal
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            TodoListPage())); // Navegar para a página TodoListPage
-                  },
-                  child: const Text(
-                    'Fechar',
-                    style: TextStyle(
-                      color: Color(0xff5bc2c9), // Altere a cor do texto aqui
-                      fontSize: 16, // Tamanho da fonte (opcional)
-                    ),
-                  ),
-                ),
-              ],
+        // Construir o gráfico de histograma usando os dados processados
+        return buildIndividualChartHistogram(histogramData);
+      },
+    );
+  } else {
+    // Mostrar mensagem de erro se não houver dados válidos
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Erro'),
+          content: Text('Dados inválidos para criar o gráfico de histograma.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Fechar o diálogo de erro
+              },
+              child: Text('OK'),
             ),
-          ),
+          ],
         );
       },
     );
   }
+}
 
-  Widget buildIndividualChart_HIST(ChartData1 chartData) {
-    // late TooltipBehavior _tooltip;
-    const myColor = Color.fromRGBO(8, 142, 255, 1);
-    const constantTextStyle = TextStyle(
-      color: Colors.black,
-      fontSize: 12,
-    );
-    const constantDataLabelSettings = DataLabelSettings(
-      isVisible: true,
-      labelAlignment: ChartDataLabelAlignment.middle,
-      textStyle: constantTextStyle,
-    );
-    return SizedBox(
-      height: 300,
-      child: SfCartesianChart(
+
+Widget buildIndividualChartHistogram(List<ChartData1> histogramData) {
+  return SizedBox(
+    height: 300,
+    child: SfCartesianChart(
       primaryXAxis: NumericAxis(
         edgeLabelPlacement: EdgeLabelPlacement.shift,
         minimum: 30, // Valor mínimo do eixo x
         maximum: 50, // Valor máximo do eixo x
         interval: 2, // Intervalo entre os rótulos no eixo x
       ),
-        // tooltipBehavior: _tooltip,
       series: <HistogramSeries<ChartData1, num>>[
         HistogramSeries<ChartData1, num>(
           dataSource: histogramData,
@@ -748,9 +729,9 @@ class _SceneMediaState extends State<SceneMedia> {
           // Mais configurações podem ser adicionadas aqui
         ),
       ],
-      ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class _ChartData {
