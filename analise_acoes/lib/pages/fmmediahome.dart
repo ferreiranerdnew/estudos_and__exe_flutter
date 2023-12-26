@@ -678,8 +678,16 @@ class _SceneMediaState extends State<SceneMedia> {
     }
 
     // Verificar se há dados válidos para exibir o gráfico
+
     if (histogramData.isNotEmpty) {
-      // Obtendo o último valor da série
+      //pegando o menor valro da lista histogramData
+      final double primeiroValor_1 = histogramData
+          .map((data) => data.value)
+          .reduce((a, b) => a < b ? a : b);
+      //pegando o maior valro da lista histogramData
+      final double ultimoValor_2 = histogramData
+          .map((data) => data.value)
+          .reduce((a, b) => a > b ? a : b);
       final double primeiroValor =
           histogramData.isNotEmpty ? histogramData.first.value : 0.0;
       final double ultimoValor =
@@ -703,7 +711,9 @@ class _SceneMediaState extends State<SceneMedia> {
                   Container(
                     height: 200,
                     child: buildIndividualChartHistogram(
-                        histogramData), // Adicionar o gráfico aqui
+                        histogramData,
+                        primeiroValor_1,
+                        ultimoValor_2), // Adicionar o gráfico aqui
                   ),
                   SizedBox(height: 16.0),
                   Text(
@@ -723,7 +733,7 @@ class _SceneMediaState extends State<SceneMedia> {
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
-                      color: isPositive? Colors.blue : Colors.red,
+                      color: isPositive ? Colors.blue : Colors.red,
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -772,14 +782,15 @@ class _SceneMediaState extends State<SceneMedia> {
     }
   }
 
-  Widget buildIndividualChartHistogram(List<ChartData1> histogramData) {
+  Widget buildIndividualChartHistogram(
+      List<ChartData1> histogramData, primeiroValor_1, ultimoValor_2) {
     return SizedBox(
       height: 250,
       child: SfCartesianChart(
         primaryXAxis: NumericAxis(
           edgeLabelPlacement: EdgeLabelPlacement.shift,
-          minimum: 30, // Valor mínimo do eixo x
-          maximum: 50, // Valor máximo do eixo x
+          minimum: primeiroValor_1, // Valor mínimo do eixo x
+          maximum: ultimoValor_2, // Valor máximo do eixo x
           interval: 2, // Intervalo entre os rótulos no eixo x
         ),
         series: <HistogramSeries<ChartData1, num>>[
@@ -811,13 +822,13 @@ class ChartData1 {
   ChartData1(this.value);
 }
 
-                // child: Text(
-                //   'Análise Ações',
-                //   style: SafeGoogleFont(
-                //     'Irish Grover',
-                //     fontSize: 30 * ffem,
-                //     fontWeight: FontWeight.w400,
-                //     height: 1.21 * ffem / fem,
-                //     color: myTextColor,
-                //   ),
-                // ),
+// child: Text(
+//   'Análise Ações',
+//   style: SafeGoogleFont(
+//     'Irish Grover',
+//     fontSize: 30 * ffem,
+//     fontWeight: FontWeight.w400,
+//     height: 1.21 * ffem / fem,
+//     color: myTextColor,
+//   ),
+// ),
