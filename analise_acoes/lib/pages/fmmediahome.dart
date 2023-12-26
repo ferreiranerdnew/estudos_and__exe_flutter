@@ -265,82 +265,160 @@ class _SceneMediaState extends State<SceneMedia> {
                 ),
               ),
               const SizedBox(height: 8), // Espaço entre os botões
-              SizedBox(
-                height: 68,
-                width: 500,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    // Adicione aqui o código a ser executado ao pressionar o botão
-                    String acoes = widget.todoTitle;
-                    String inicio = _dataController.text;
-                    String fim_1 = _dataControllerFim.text;
-                    // Convertendo as strings para objetos DateTime
-                    DateTime inicioDate = DateTime.parse(inicio);
-                    DateTime fimDate = DateTime.parse(fim_1);
-                    if (inicioDate.isAfter(fimDate)) {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text("Alerta"),
-                            content: Row(
-                              children: [
-                                Icon(
-                                  Icons.error_outline, // Ícone de alerta
-                                  color: Colors.red, // Cor do ícone (opcional)
-                                ),
-                                SizedBox(
-                                    width:
-                                        8), // Espaçamento entre o ícone e o texto
-                                Text(
-                                    "Verificar a data fim não pode ser \n menor que a data inicio !!"),
-                              ],
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  // fechar o dialogo sem nenhuma mudança pelo botão cancelar
-                                  Navigator.of(context).pop(); // Fechar o modal
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          TodoListPage())); // Navegar para a página TodoListPage
-                                },
-                                style: TextButton.styleFrom(
-                                    foregroundColor: Color(0xff00d7f3)),
-                                child: Text('OK'),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
+                      // Adicione aqui o código a ser executado ao pressionar o botão
+                      String acoes = widget.todoTitle;
+                      String inicio = _dataController.text;
+                      String fim_1 = _dataControllerFim.text;
+                      // Convertendo as strings para objetos DateTime
+                      DateTime inicioDate = DateTime.parse(inicio);
+                      DateTime fimDate = DateTime.parse(fim_1);
+                      if (inicioDate.isAfter(fimDate)) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Alerta"),
+                              content: Row(
+                                children: [
+                                  Icon(
+                                    Icons.error_outline, // Ícone de alerta
+                                    color:
+                                        Colors.red, // Cor do ícone (opcional)
+                                  ),
+                                  SizedBox(
+                                      width:
+                                          8), // Espaçamento entre o ícone e o texto
+                                  Text(
+                                      "Verificar a data fim não pode ser \n menor que a data inicio !!"),
+                                ],
                               ),
-                            ],
-                          );
-                        },
-                      );
-                    } else {
-                      final url = Uri.parse(
-                          'http://191.252.200.156:81/acoesboxplot?usuario=appFNB3&senha=SOSlgQOQqlYMXA((i1U2E3909875367****jhbdfb&acoes=$acoes&inicio=$inicio');
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    // fechar o dialogo sem nenhuma mudança pelo botão cancelar
+                                    Navigator.of(context)
+                                        .pop(); // Fechar o modal
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            TodoListPage())); // Navegar para a página TodoListPage
+                                  },
+                                  style: TextButton.styleFrom(
+                                      foregroundColor: Color(0xff00d7f3)),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        final url = Uri.parse(
+                            'http://191.252.200.156:81/acoesboxplot?usuario=appFNB3&senha=SOSlgQOQqlYMXA((i1U2E3909875367****jhbdfb&acoes=$acoes&inicio=$inicio&fimdata=$fim_1');
 
-                      // RF Colocando um ponto de espera para o usuario um circulo de processamento
-                      showDialog(
-                        context: context,
-                        barrierDismissible:
-                            false, // Impede o fechamento do diálogo ao tocar fora dele
-                        builder: (BuildContext context) {
-                          return Center(
-                            child:
-                                CircularProgressIndicator(), // Indicador de progresso circular
-                          );
-                        },
-                      );
+                        // RF Colocando um ponto de espera para o usuario um circulo de processamento
+                        showDialog(
+                          context: context,
+                          barrierDismissible:
+                              false, // Impede o fechamento do diálogo ao tocar fora dele
+                          builder: (BuildContext context) {
+                            return Center(
+                              child:
+                                  CircularProgressIndicator(), // Indicador de progresso circular
+                            );
+                          },
+                        );
 
-                      try {
-                        final response = await http.get(url);
+                        try {
+                          final response = await http.get(url);
 
-                        if (response.statusCode == 200) {
-                          final responseData = json.decode(response.body);
-                          // print(responseData);
+                          if (response.statusCode == 200) {
+                            final responseData = json.decode(response.body);
+                            // print(responseData);
 
-                          // Navegue para a próxima página passando os dados brutos
-                          showChartModal(context, responseData);
-                        } else {
-                          // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
+                            // Navegue para a próxima página passando os dados brutos
+                            showChartModal(context, responseData);
+                          } else {
+                            // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Alerta"),
+                                  content: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.error_outline, // Ícone de alerta
+                                        color: Colors
+                                            .red, // Cor do ícone (opcional)
+                                      ),
+                                      SizedBox(
+                                          width:
+                                              8), // Espaçamento entre o ícone e o texto
+                                      Text(
+                                          "Verificar o ticket \n da empresa !!"),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        // fechar o dialogo sem nenhuma mudança pelo botão cancelar
+                                        Navigator.of(context)
+                                            .pop(); // Fechar o modal
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TodoListPage())); // Navegar para a página TodoListPage
+                                      },
+                                      style: TextButton.styleFrom(
+                                          foregroundColor: Color(0xff00d7f3)),
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        } catch (e) {
+                          // Trate os erros que possam ocorrer durante a requisição
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(36 * fem),
+                      ),
+                      backgroundColor: Color(0xff5bc2c9),
+                    ),
+                    child: Text(
+                      'Analisar Média',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Irish Grover',
+                        fontSize: 16 * ffem,
+                        fontWeight: FontWeight.w400,
+                        // height: 0.21 * ffem / fem,
+                        color: Color(0xffebf5f6),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                  height: 68,
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        // Adicione aqui o código a ser executado ao pressionar o botão
+                        String acoes = widget.todoTitle;
+                        String inicio = _dataController.text;
+                        String fim_1 = _dataControllerFim.text;
+                        // Convertendo as strings para objetos DateTime
+                        DateTime inicioDate = DateTime.parse(inicio);
+                        DateTime fimDate = DateTime.parse(fim_1);
+                        if (inicioDate.isAfter(fimDate)) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -356,7 +434,8 @@ class _SceneMediaState extends State<SceneMedia> {
                                     SizedBox(
                                         width:
                                             8), // Espaçamento entre o ícone e o texto
-                                    Text("Verificar o ticket \n da empresa !!"),
+                                    Text(
+                                        "Verificar a data fim não pode ser \n menor que a data inicio !!"),
                                   ],
                                 ),
                                 actions: [
@@ -377,31 +456,99 @@ class _SceneMediaState extends State<SceneMedia> {
                               );
                             },
                           );
+                        } else {
+                          final url = Uri.parse(
+                              'http://191.252.200.156:81/acoesboxplot?usuario=appFNB3&senha=SOSlgQOQqlYMXA((i1U2E3909875367****jhbdfb&acoes=$acoes&inicio=$inicio&fimdata=$fim_1');
+                    
+                          // RF Colocando um ponto de espera para o usuario um circulo de processamento
+                          showDialog(
+                            context: context,
+                            barrierDismissible:
+                                false, // Impede o fechamento do diálogo ao tocar fora dele
+                            builder: (BuildContext context) {
+                              return Center(
+                                child:
+                                    CircularProgressIndicator(), // Indicador de progresso circular
+                              );
+                            },
+                          );
+                    
+                          try {
+                            final response = await http.get(url);
+                    
+                            if (response.statusCode == 200) {
+                              final responseData = json.decode(response.body);
+                              // print(responseData);
+                    
+                              // Navegue para a próxima página passando os dados brutos
+                              showChartModal(context, responseData);
+                            } else {
+                              // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Alerta"),
+                                    content: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.error_outline, // Ícone de alerta
+                                          color: Colors
+                                              .red, // Cor do ícone (opcional)
+                                        ),
+                                        SizedBox(
+                                            width:
+                                                8), // Espaçamento entre o ícone e o texto
+                                        Text(
+                                            "Verificar o ticket \n da empresa !!"),
+                                      ],
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          // fechar o dialogo sem nenhuma mudança pelo botão cancelar
+                                          Navigator.of(context)
+                                              .pop(); // Fechar o modal
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TodoListPage())); // Navegar para a página TodoListPage
+                                        },
+                                        style: TextButton.styleFrom(
+                                            foregroundColor: Color(0xff00d7f3)),
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          } catch (e) {
+                            // Trate os erros que possam ocorrer durante a requisição
+                          }
                         }
-                      } catch (e) {
-                        // Trate os erros que possam ocorrer durante a requisição
-                      }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(36 * fem),
-                    ),
-                    backgroundColor: Color(0xff5bc2c9),
-                  ),
-                  child: Text(
-                    'Analisar Média',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Irish Grover',
-                      fontSize: 32 * ffem,
-                      fontWeight: FontWeight.w400,
-                      // height: 0.21 * ffem / fem,
-                      color: Color(0xffebf5f6),
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(36 * fem),
+                        ),
+                        backgroundColor: Color(0xff5bc2c9),
+                      ),
+                      child: Text(
+                        'Analisar Média',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Irish Grover',
+                          fontSize: 16 * ffem,
+                          fontWeight: FontWeight.w400,
+                          // height: 0.21 * ffem / fem,
+                          color: Color(0xffebf5f6),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
               const SizedBox(height: 200),
             ],

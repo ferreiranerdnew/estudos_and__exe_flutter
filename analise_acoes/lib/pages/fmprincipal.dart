@@ -49,7 +49,7 @@ class Scene extends StatelessWidget {
                         ),
                         child: ListTile(
                           title: Text(
-                            'Média',
+                            'Análise',
                             style: SafeGoogleFont(
                               'Irish Grover',
                               fontSize: 30 * ffem,
