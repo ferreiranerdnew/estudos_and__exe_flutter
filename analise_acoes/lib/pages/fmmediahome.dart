@@ -663,20 +663,13 @@ class _SceneMediaState extends State<SceneMedia> {
   void showChartModal_HITOGRAMA(BuildContext context, dynamic responseData) {
     List<_ChartData> fetchedData = [];
 
-    // if (responseData.isNotEmpty) {
-    //   responseData.forEach((key, value) {
-    //     List<double> parsedValues =
-    //         List<double>.from(value.map((v) => double.parse(v.toString())));
-    //     fetchedData.add(_ChartData(key, parsedValues));
-    //   });
-    // }
     responseData.forEach((key, value) {
       value.forEach((v) {
         histogramData.add(ChartData1(v));
       });
     });
     print(histogramData);
-    
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -686,14 +679,14 @@ class _SceneMediaState extends State<SceneMedia> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                fetchedData.isNotEmpty
+                histogramData.isNotEmpty
                     ? Column(
                         children: fetchedData
-                            .map((chartData) =>
-                                buildIndividualChart_HIST(chartData))
+                            .map((histogramData) =>
+                                buildIndividualChart_HIST(histogramData))
                             .toList(),
                       )
-                    : const Text('Sem dados para exibir'),
+                    : const Text('Sem dados para exibir2'),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
@@ -722,7 +715,7 @@ class _SceneMediaState extends State<SceneMedia> {
     );
   }
 
-  Widget buildIndividualChart_HIST(_ChartData chartData) {
+  Widget buildIndividualChart_HIST(ChartData1 chartData) {
     // late TooltipBehavior _tooltip;
     const myColor = Color.fromRGBO(8, 142, 255, 1);
     const constantTextStyle = TextStyle(
@@ -737,25 +730,24 @@ class _SceneMediaState extends State<SceneMedia> {
     return SizedBox(
       height: 300,
       child: SfCartesianChart(
-        primaryXAxis: CategoryAxis(),
-        primaryYAxis: NumericAxis(
-          labelStyle: constantTextStyle,
-          minimum: chartData.y.reduce(min).toDouble(),
-          maximum: chartData.y.reduce(max).toDouble(),
-          interval: 1,
-          labelFormat: '{value}',
-        ),
+      primaryXAxis: NumericAxis(
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
+        minimum: 30, // Valor mínimo do eixo x
+        maximum: 50, // Valor máximo do eixo x
+        interval: 2, // Intervalo entre os rótulos no eixo x
+      ),
         // tooltipBehavior: _tooltip,
-        series: <ChartSeries>[
-          BoxAndWhiskerSeries<_ChartData, String>(
-            dataSource: [chartData],
-            xValueMapper: (_ChartData data, _) => data.x,
-            yValueMapper: (_ChartData data, _) => data.y,
-            name: chartData.x,
-            color: myColor,
-            dataLabelSettings: constantDataLabelSettings,
-          ),
-        ],
+      series: <HistogramSeries<ChartData1, num>>[
+        HistogramSeries<ChartData1, num>(
+          dataSource: histogramData,
+          yValueMapper: (ChartData1 sales, _) => sales.value,
+          binInterval: 1, // Isso controla o intervalo dos dados, não o eixo x
+          showNormalDistributionCurve: true,
+          curveColor: const Color.fromRGBO(192, 108, 132, 1),
+          borderWidth: 3,
+          // Mais configurações podem ser adicionadas aqui
+        ),
+      ],
       ),
     );
   }
