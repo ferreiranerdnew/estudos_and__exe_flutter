@@ -40,9 +40,9 @@ class _SceneMediaState extends State<SceneMedia> {
 
     String initialFormattedDate =
         "${initialDate.year}-${initialDate.month.toString().padLeft(2, '0')}-${initialDate.day.toString().padLeft(2, '0')}";
-    
+
     String fimFormattedDate =
-       "${fim_Date.year}-${fim_Date.month.toString().padLeft(2, '0')}-${fim_Date.day.toString().padLeft(2, '0')}";
+        "${fim_Date.year}-${fim_Date.month.toString().padLeft(2, '0')}-${fim_Date.day.toString().padLeft(2, '0')}";
     // print(fimFormattedDate);
 
     _dataController.text = initialFormattedDate;
@@ -83,7 +83,7 @@ class _SceneMediaState extends State<SceneMedia> {
                 height: 50, // Defina a altura desejada aqui
                 alignment: Alignment.center, // Centraliza o conteúdo
                 child: Text(
-                  'Análise média',
+                  'Análise Ações',
                   style: SafeGoogleFont(
                     'Irish Grover',
                     fontSize: 30 * ffem,
@@ -197,7 +197,7 @@ class _SceneMediaState extends State<SceneMedia> {
               const SizedBox(height: 8), // Espaço entre os botões
               ElevatedButton(
                 onPressed: () async {
-                  final DateTime? pickedDate = await showDatePicker(
+                  final DateTime? pickedDate_fim = await showDatePicker(
                     context: context,
                     initialDate: fim_Date,
                     firstDate: DateTime(DateTime.now().year - 10),
@@ -205,10 +205,10 @@ class _SceneMediaState extends State<SceneMedia> {
                     // locale: const Locale('pt', 'BR'),
                   );
 
-                  if (pickedDate != null) {
-                    String formattedDate =
-                        "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-                    _dataControllerFim.text = formattedDate;
+                  if (pickedDate_fim != null) {
+                    String formattedDate_fim =
+                        "${pickedDate_fim.year}-${pickedDate_fim.month.toString().padLeft(2, '0')}-${pickedDate_fim.day.toString().padLeft(2, '0')}";
+                    _dataControllerFim.text = formattedDate_fim;
                   }
                 },
                 style: ButtonStyle(
@@ -247,7 +247,7 @@ class _SceneMediaState extends State<SceneMedia> {
                     ),
                     readOnly: true,
                     onTap: () async {
-                      final DateTime? pickedDate = await showDatePicker(
+                      final DateTime? pickedDate_fim = await showDatePicker(
                         context: context,
                         initialDate: initialDate,
                         firstDate: DateTime(DateTime.now().year - 5),
@@ -255,10 +255,10 @@ class _SceneMediaState extends State<SceneMedia> {
                         // locale: const Locale('pt', 'BR'),
                       );
 
-                      if (pickedDate != null) {
-                        String formattedDate =
-                            "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-                        _dataControllerFim.text = formattedDate;
+                      if (pickedDate_fim != null) {
+                        String formattedDate_fim =
+                            "${pickedDate_fim.year}-${pickedDate_fim.month.toString().padLeft(2, '0')}-${pickedDate_fim.day.toString().padLeft(2, '0')}";
+                        _dataControllerFim.text = formattedDate_fim;
                       }
                     },
                   ),
@@ -273,76 +273,114 @@ class _SceneMediaState extends State<SceneMedia> {
                     // Adicione aqui o código a ser executado ao pressionar o botão
                     String acoes = widget.todoTitle;
                     String inicio = _dataController.text;
-                    if (inicio.isEmpty) {
-                      // Adicione alguma lógica aqui se o campo de data estiver vazio
-                      return;
-                    }
-                    final url = Uri.parse(
-                        'http://191.252.200.156:81/acoesboxplot?usuario=appFNB3&senha=SOSlgQOQqlYMXA((i1U2E3909875367****jhbdfb&acoes=$acoes&inicio=$inicio');
-
-                    // RF Colocando um ponto de espera para o usuario um circulo de processamento
-                    showDialog(
-                      context: context,
-                      barrierDismissible:
-                          false, // Impede o fechamento do diálogo ao tocar fora dele
-                      builder: (BuildContext context) {
-                        return Center(
-                          child:
-                              CircularProgressIndicator(), // Indicador de progresso circular
-                        );
-                      },
-                    );
-
-                    try {
-                      final response = await http.get(url);
-
-                      if (response.statusCode == 200) {
-                        final responseData = json.decode(response.body);
-                        // print(responseData);
-
-                        // Navegue para a próxima página passando os dados brutos
-                        showChartModal(context, responseData);
-                      } else {
-                        // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Alerta"),
-                              content: Row(
-                                children: [
-                                  Icon(
-                                    Icons.error_outline, // Ícone de alerta
-                                    color:
-                                        Colors.red, // Cor do ícone (opcional)
-                                  ),
-                                  SizedBox(
-                                      width:
-                                          8), // Espaçamento entre o ícone e o texto
-                                  Text("Verificar o ticket \n da empresa !!"),
-                                ],
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    // fechar o dialogo sem nenhuma mudança pelo botão cancelar
-                                    Navigator.of(context)
-                                        .pop(); // Fechar o modal
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
-                                            TodoListPage())); // Navegar para a página TodoListPage
-                                  },
-                                  style: TextButton.styleFrom(
-                                      foregroundColor: Color(0xff00d7f3)),
-                                  child: Text('OK'),
+                    String fim_1 = _dataControllerFim.text;
+                    // Convertendo as strings para objetos DateTime
+                    DateTime inicioDate = DateTime.parse(inicio);
+                    DateTime fimDate = DateTime.parse(fim_1);
+                    if (inicioDate.isAfter(fimDate)) {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Alerta"),
+                            content: Row(
+                              children: [
+                                Icon(
+                                  Icons.error_outline, // Ícone de alerta
+                                  color: Colors.red, // Cor do ícone (opcional)
                                 ),
+                                SizedBox(
+                                    width:
+                                        8), // Espaçamento entre o ícone e o texto
+                                Text(
+                                    "Verificar a data fim não pode ser \n menor que a data inicio !!"),
                               ],
-                            );
-                          },
-                        );
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  // fechar o dialogo sem nenhuma mudança pelo botão cancelar
+                                  Navigator.of(context).pop(); // Fechar o modal
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          TodoListPage())); // Navegar para a página TodoListPage
+                                },
+                                style: TextButton.styleFrom(
+                                    foregroundColor: Color(0xff00d7f3)),
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      final url = Uri.parse(
+                          'http://191.252.200.156:81/acoesboxplot?usuario=appFNB3&senha=SOSlgQOQqlYMXA((i1U2E3909875367****jhbdfb&acoes=$acoes&inicio=$inicio');
+
+                      // RF Colocando um ponto de espera para o usuario um circulo de processamento
+                      showDialog(
+                        context: context,
+                        barrierDismissible:
+                            false, // Impede o fechamento do diálogo ao tocar fora dele
+                        builder: (BuildContext context) {
+                          return Center(
+                            child:
+                                CircularProgressIndicator(), // Indicador de progresso circular
+                          );
+                        },
+                      );
+
+                      try {
+                        final response = await http.get(url);
+
+                        if (response.statusCode == 200) {
+                          final responseData = json.decode(response.body);
+                          // print(responseData);
+
+                          // Navegue para a próxima página passando os dados brutos
+                          showChartModal(context, responseData);
+                        } else {
+                          // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Alerta"),
+                                content: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline, // Ícone de alerta
+                                      color:
+                                          Colors.red, // Cor do ícone (opcional)
+                                    ),
+                                    SizedBox(
+                                        width:
+                                            8), // Espaçamento entre o ícone e o texto
+                                    Text("Verificar o ticket \n da empresa !!"),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      // fechar o dialogo sem nenhuma mudança pelo botão cancelar
+                                      Navigator.of(context)
+                                          .pop(); // Fechar o modal
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              TodoListPage())); // Navegar para a página TodoListPage
+                                    },
+                                    style: TextButton.styleFrom(
+                                        foregroundColor: Color(0xff00d7f3)),
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      } catch (e) {
+                        // Trate os erros que possam ocorrer durante a requisição
                       }
-                    } catch (e) {
-                      // Trate os erros que possam ocorrer durante a requisição
                     }
                   },
                   style: ElevatedButton.styleFrom(
