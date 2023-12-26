@@ -728,7 +728,9 @@ class _SceneMediaState extends State<SceneMedia> {
                           style: SafeGoogleFont(
                             'Irish Grover',
                             fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w400,
+                            height: 1.21 * ffem / fem,
+                            color: myTextColor,
                           ),
                         ),
                       ),
@@ -739,7 +741,9 @@ class _SceneMediaState extends State<SceneMedia> {
                           style: SafeGoogleFont(
                             'Irish Grover',
                             fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w400,
+                            height: 1.21 * ffem / fem,
+                            color: myTextColor,
                           ),
                         ),
                       ),
@@ -755,7 +759,9 @@ class _SceneMediaState extends State<SceneMedia> {
                           style: SafeGoogleFont(
                             'Irish Grover',
                             fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w400,
+                            height: 1.21 * ffem / fem,
+                            color: myTextColor,
                           ),
                         ),
                       ),
@@ -776,7 +782,7 @@ class _SceneMediaState extends State<SceneMedia> {
                   ),
                   SizedBox(height: 4.0),
                   Text(
-                    'Percentual: $percentualFormatado%',
+                    '$percentualFormatado% Ref => ((Últ - Pri)/ Pri)* 100',
                     style: SafeGoogleFont(
                       'Irish Grover',
                       fontSize: 16.0,
