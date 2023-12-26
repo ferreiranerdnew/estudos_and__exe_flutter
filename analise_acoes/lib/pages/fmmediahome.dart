@@ -566,52 +566,68 @@ class _SceneMediaState extends State<SceneMedia> {
   }
 
 // RF inicio configuração do modal onde é apresentando o gráfico boxplot
-  void showChartModal(BuildContext context, dynamic responseData) {
-    List<_ChartData> fetchedData = [];
+ void showChartModalHistogram(BuildContext context, dynamic responseData) {
+  List<ChartData1> histogramData = [];
 
-    if (responseData.isNotEmpty) {
-      responseData.forEach((key, value) {
-        List<double> parsedValues =
-            List<double>.from(value.map((v) => double.parse(v.toString())));
-        fetchedData.add(_ChartData(key, parsedValues));
-      });
-    }
+  // Verifica se a estrutura dos dados é adequada para processamento
+  if (responseData is Map<String, dynamic>) {
+    responseData.forEach((key, value) {
+      if (value is List<dynamic>) {
+        value.forEach((v) {
+          if (v is num) {
+            histogramData.add(ChartData1(v.toDouble())); // Adaptar para o formato necessário
+          }
+        });
+      }
+    });
+  }
 
+  // Verificar se há dados válidos para exibir o gráfico
+  if (histogramData.isNotEmpty) {
+        // Obtendo o último valor da série
+    final double primeiroValor =
+        histogramData.isNotEmpty ? histogramData.first.value : 0.0;
+    final double ultimoValor =
+        histogramData.isNotEmpty ? histogramData.last.value : 0.0;
+    final double percentual_1 =
+        ((ultimoValor - primeiroValor) / primeiroValor) * 100;
+    final percentualFormatado =
+        percentual_1.toStringAsFixed(2); // Formatando para duas casas decimais
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            alignment: Alignment.center,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                fetchedData.isNotEmpty
-                    ? Column(
-                        children: fetchedData
-                            .map((chartData) => buildIndividualChart(chartData))
-                            .toList(),
-                      )
-                    : const Text('Sem dados para exibir'),
-                const SizedBox(height: 10),
+                Container(
+                  height: 300,
+                  child: buildIndividualChartHistogram(histogramData), // Adicionar o gráfico aqui
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'Primeiro valor: $primeiroValor',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  'Último valor: $ultimoValor',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8.0),
+                Text(
+                  'Percentual: $percentualFormatado%',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () {
-                    // RF Google ADMOB 22/12/2023 19:13
-                    // Primeiro, crie o anúncio
-                    // _showInterstitialAd();
-                    admobManager.showInterstitialAd();
-                    Navigator.of(context).pop(); // Fechar o modal
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            TodoListPage())); // Navegar para a página TodoListPage
+                    Navigator.pop(context); // Fechar o modal ao clicar no botão
                   },
-                  child: const Text(
-                    'Fechar',
-                    style: TextStyle(
-                      color: Color(0xff5bc2c9), // Altere a cor do texto aqui
-                      fontSize: 16, // Tamanho da fonte (opcional)
-                    ),
-                  ),
+                  child: Text('Fechar'),
                 ),
               ],
             ),
@@ -619,7 +635,28 @@ class _SceneMediaState extends State<SceneMedia> {
         );
       },
     );
+  } else {
+    // Mostrar mensagem de erro se não houver dados válidos
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Erro'),
+          content: Text('Dados inválidos para criar o gráfico de histograma.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Fechar o diálogo de erro
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
+}
+
 
   Widget buildIndividualChart(_ChartData chartData) {
     // late TooltipBehavior _tooltip;
@@ -660,8 +697,9 @@ class _SceneMediaState extends State<SceneMedia> {
   }
 
 // RF inicio configuração do modal onde é apresentando o gráfico HITOGRAMA
-void showChartModalHistogram(BuildContext context, dynamic responseData) {
+ void showChartModalHistogram(BuildContext context, dynamic responseData) {
   List<ChartData1> histogramData = [];
+  
 
   // Verifica se a estrutura dos dados é adequada para processamento
   if (responseData is Map<String, dynamic>) {
@@ -676,13 +714,58 @@ void showChartModalHistogram(BuildContext context, dynamic responseData) {
     });
   }
 
+
   // Verificar se há dados válidos para exibir o gráfico
   if (histogramData.isNotEmpty) {
+      // Obtendo o último valor da série
+    final double primeiroValor =
+        histogramData.isNotEmpty ? histogramData.first.value : 0.0;
+    final double ultimoValor =
+        histogramData.isNotEmpty ? histogramData.last.value : 0.0;
+    final double percentual_1 =
+        ((ultimoValor - primeiroValor) / primeiroValor) * 100;
+    final percentualFormatado =
+        percentual_1.toStringAsFixed(2); // Formatando para duas casas decimais
+
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        // Construir o gráfico de histograma usando os dados processados
-        return buildIndividualChartHistogram(histogramData);
+        return Container(
+          // padding: EdgeInsets.all(24.0),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 40000,
+                child: buildIndividualChartHistogram(histogramData), // Adicionar o gráfico aqui
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Primeiro valor: $primeiroValor',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                'Último valor: $ultimoValor',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8.0),
+              Text(
+                'Percentual: $percentualFormatado%',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Fechar o modal ao clicar no botão
+                },
+                child: Text('Fechar'),
+              ),
+            ],
+          ),
+        );
       },
     );
   } else {
@@ -708,30 +791,30 @@ void showChartModalHistogram(BuildContext context, dynamic responseData) {
 }
 
 
-Widget buildIndividualChartHistogram(List<ChartData1> histogramData) {
-  return SizedBox(
-    height: 300,
-    child: SfCartesianChart(
-      primaryXAxis: NumericAxis(
-        edgeLabelPlacement: EdgeLabelPlacement.shift,
-        minimum: 30, // Valor mínimo do eixo x
-        maximum: 50, // Valor máximo do eixo x
-        interval: 2, // Intervalo entre os rótulos no eixo x
-      ),
-      series: <HistogramSeries<ChartData1, num>>[
-        HistogramSeries<ChartData1, num>(
-          dataSource: histogramData,
-          yValueMapper: (ChartData1 sales, _) => sales.value,
-          binInterval: 1, // Isso controla o intervalo dos dados, não o eixo x
-          showNormalDistributionCurve: true,
-          curveColor: const Color.fromRGBO(192, 108, 132, 1),
-          borderWidth: 3,
-          // Mais configurações podem ser adicionadas aqui
+  Widget buildIndividualChartHistogram(List<ChartData1> histogramData) {
+    return SizedBox(
+      height: 300,
+      child: SfCartesianChart(
+        primaryXAxis: NumericAxis(
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          minimum: 30, // Valor mínimo do eixo x
+          maximum: 50, // Valor máximo do eixo x
+          interval: 2, // Intervalo entre os rótulos no eixo x
         ),
-      ],
-    ),
-  );
-}
+        series: <HistogramSeries<ChartData1, num>>[
+          HistogramSeries<ChartData1, num>(
+            dataSource: histogramData,
+            yValueMapper: (ChartData1 sales, _) => sales.value,
+            binInterval: 1, // Isso controla o intervalo dos dados, não o eixo x
+            showNormalDistributionCurve: true,
+            curveColor: const Color.fromRGBO(192, 108, 132, 1),
+            borderWidth: 3,
+            // Mais configurações podem ser adicionadas aqui
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _ChartData {
