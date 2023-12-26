@@ -131,8 +131,8 @@ class _SceneMediaState extends State<SceneMedia> {
                   final DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: initialDate,
-                    firstDate: DateTime(DateTime.now().year - 10),
-                    lastDate: DateTime(DateTime.now().year + 10),
+                    firstDate: DateTime(DateTime.now().year - 5),
+                    lastDate: DateTime(DateTime.now().year + 1),
                     // locale: const Locale('pt', 'BR'),
                   );
 
@@ -182,7 +182,7 @@ class _SceneMediaState extends State<SceneMedia> {
                         context: context,
                         initialDate: initialDate,
                         firstDate: DateTime(DateTime.now().year - 5),
-                        lastDate: DateTime(DateTime.now().year + 10),
+                        lastDate: DateTime(DateTime.now().year + 1),
                         // locale: const Locale('pt', 'BR'),
                       );
 
@@ -201,8 +201,8 @@ class _SceneMediaState extends State<SceneMedia> {
                   final DateTime? pickedDate_fim = await showDatePicker(
                     context: context,
                     initialDate: fim_Date,
-                    firstDate: DateTime(DateTime.now().year - 10),
-                    lastDate: DateTime(DateTime.now().year + 10),
+                    firstDate: DateTime(DateTime.now().year - 2),
+                    lastDate: DateTime(DateTime.now().year + 1),
                     // locale: const Locale('pt', 'BR'),
                   );
 
@@ -251,8 +251,8 @@ class _SceneMediaState extends State<SceneMedia> {
                       final DateTime? pickedDate_fim = await showDatePicker(
                         context: context,
                         initialDate: fim_Date,
-                        firstDate: DateTime(DateTime.now().year - 5),
-                        lastDate: DateTime(DateTime.now().year + 10),
+                        firstDate: DateTime(DateTime.now().year - 2),
+                        lastDate: DateTime(DateTime.now().year + 1),
                         // locale: const Locale('pt', 'BR'),
                       );
 
@@ -605,9 +605,10 @@ class _SceneMediaState extends State<SceneMedia> {
                         builder: (context) =>
                             TodoListPage())); // Navegar para a página TodoListPage
                   },
-                  child: const Text(
+                  child: Text(
                     'Fechar',
-                    style: TextStyle(
+                    style: SafeGoogleFont(
+                      'Irish Grover',
                       color: Color(0xff5bc2c9), // Altere a cor do texto aqui
                       fontSize: 16, // Tamanho da fonte (opcional)
                     ),
@@ -724,7 +725,8 @@ class _SceneMediaState extends State<SceneMedia> {
                       Expanded(
                         child: Text(
                           'Primeiro valor: $primeiroValor',
-                          style: TextStyle(
+                          style: SafeGoogleFont(
+                            'Irish Grover',
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -734,7 +736,8 @@ class _SceneMediaState extends State<SceneMedia> {
                       Expanded(
                         child: Text(
                           'Último valor: $ultimoValor',
-                          style: TextStyle(
+                          style: SafeGoogleFont(
+                            'Irish Grover',
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -749,7 +752,8 @@ class _SceneMediaState extends State<SceneMedia> {
                       Expanded(
                         child: Text(
                           'Menor valor: $primeiroValor_1',
-                          style: TextStyle(
+                          style: SafeGoogleFont(
+                            'Irish Grover',
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -757,23 +761,24 @@ class _SceneMediaState extends State<SceneMedia> {
                       ),
                       SizedBox(width: 16.0),
                       Expanded(
-                child: Text(
-                   'Maior valor: $ultimoValor_2',
-                  style: SafeGoogleFont(
-                    'Irish Grover',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    height: 1.21 * ffem / fem,
-                    color: myTextColor,
-                  ),
-                ),
+                        child: Text(
+                          'Maior valor: $ultimoValor_2',
+                          style: SafeGoogleFont(
+                            'Irish Grover',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            height: 1.21 * ffem / fem,
+                            color: myTextColor,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(height: 4.0),
                   Text(
                     'Percentual: $percentualFormatado%',
-                    style: TextStyle(
+                    style: SafeGoogleFont(
+                      'Irish Grover',
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       color: isPositive ? Colors.blue : Colors.red,
@@ -782,15 +787,17 @@ class _SceneMediaState extends State<SceneMedia> {
                   SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: () {
+                      admobManager.showInterstitialAd();
                       Navigator.pop(
                           context); // Fechar o modal ao clicar no botão
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) =>
                               TodoListPage())); // Navegar para a página TodoListPage
                     },
-                    child: const Text(
+                    child: Text(
                       'Fechar',
-                      style: TextStyle(
+                      style: SafeGoogleFont(
+                        'Irish Grover',
                         color: Color(0xff5bc2c9), // Altere a cor do texto aqui
                         fontSize: 16, // Tamanho da fonte (opcional)
                       ),

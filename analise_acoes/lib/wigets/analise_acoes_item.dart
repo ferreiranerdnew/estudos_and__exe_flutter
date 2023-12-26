@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:analise_acoes/models/todo.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:analise_acoes/utils.dart';
 
 class TodoListItem extends StatelessWidget {
   // definir um parametro obrigadorio required this.title  e final String? title;  ( o ? define que não pode ser null)
@@ -52,7 +53,8 @@ class TodoListItem extends StatelessWidget {
               ),
               Text(
                 todo.title,
-                style: TextStyle(
+                style: SafeGoogleFont(
+                  'Irish Grover',
                   fontSize: 16,
                   // deixando a fonte em negrito mais conhecido como dar peso ao texto
                   fontWeight: FontWeight.w600,
@@ -74,7 +76,7 @@ class TodoListItem extends StatelessWidget {
             },
           ),
           IconSlideAction(
-            caption: 'Analisar \n   Média',
+            caption: 'Analisar \n Acões',
             color: Colors.blue,
             icon: Icons.analytics_sharp,
             onTap: () {
