@@ -250,7 +250,7 @@ class _SceneMediaState extends State<SceneMedia> {
                     onTap: () async {
                       final DateTime? pickedDate_fim = await showDatePicker(
                         context: context,
-                        initialDate: initialDate,
+                        initialDate: fim_Date,
                         firstDate: DateTime(DateTime.now().year - 5),
                         lastDate: DateTime(DateTime.now().year + 10),
                         // locale: const Locale('pt', 'BR'),
@@ -661,6 +661,10 @@ class _SceneMediaState extends State<SceneMedia> {
 
 // RF inicio configuração do modal onde é apresentando o gráfico HITOGRAMA
   void showChartModalHistogram(BuildContext context, dynamic responseData) {
+    const myTextColor = Color(0xff575f61);
+    double baseWidth = 430;
+    double fem = MediaQuery.of(context).size.width / baseWidth;
+    double ffem = fem * 0.97;
     List<ChartData1> histogramData = [];
 
     // Verifica se a estrutura dos dados é adequada para processamento
@@ -676,9 +680,7 @@ class _SceneMediaState extends State<SceneMedia> {
         }
       });
     }
-
     // Verificar se há dados válidos para exibir o gráfico
-
     if (histogramData.isNotEmpty) {
       //pegando o menor valro da lista histogramData
       final double primeiroValor_1 = histogramData
@@ -716,16 +718,57 @@ class _SceneMediaState extends State<SceneMedia> {
                         ultimoValor_2), // Adicionar o gráfico aqui
                   ),
                   SizedBox(height: 16.0),
-                  Text(
-                    'Primeiro valor: $primeiroValor',
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Primeiro valor: $primeiroValor',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 16.0),
+                      Expanded(
+                        child: Text(
+                          'Último valor: $ultimoValor',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 4.0),
-                  Text(
-                    'Último valor: $ultimoValor',
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  SizedBox(height: 16.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Menor valor: $primeiroValor_1',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 16.0),
+                      Expanded(
+                child: Text(
+                   'Maior valor: $ultimoValor_2',
+                  style: SafeGoogleFont(
+                    'Irish Grover',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    height: 1.21 * ffem / fem,
+                    color: myTextColor,
+                  ),
+                ),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 4.0),
                   Text(
@@ -821,14 +864,3 @@ class ChartData1 {
 
   ChartData1(this.value);
 }
-
-// child: Text(
-//   'Análise Ações',
-//   style: SafeGoogleFont(
-//     'Irish Grover',
-//     fontSize: 30 * ffem,
-//     fontWeight: FontWeight.w400,
-//     height: 1.21 * ffem / fem,
-//     color: myTextColor,
-//   ),
-// ),
