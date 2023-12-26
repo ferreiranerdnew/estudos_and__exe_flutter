@@ -22,6 +22,7 @@ class SceneMedia extends StatefulWidget {
 
 class _SceneMediaState extends State<SceneMedia> {
   late List<_ChartData> data = [];
+  late List<ChartData1> histogramData = [];
   late TextEditingController _dataController;
   late TextEditingController _dataControllerFim;
   late DateTime initialDate;
@@ -483,10 +484,10 @@ class _SceneMediaState extends State<SceneMedia> {
 
                             if (response.statusCode == 200) {
                               final responseData = json.decode(response.body);
-                              // print(responseData);
+                              // List<ChartData1> fetchedData = [];
 
                               // Navegue para a próxima página passando os dados brutos
-                              showChartModal(context, responseData);
+                              showChartModal_HITOGRAMA(context, responseData);
                             } else {
                               // Exibir uma mensagem ao usuário quando a resposta não é bem-sucedida
                               showDialog(
@@ -564,7 +565,7 @@ class _SceneMediaState extends State<SceneMedia> {
     );
   }
 
-// RF inicio configuração do modal onde é apresentando o gráfico
+// RF inicio configuração do modal onde é apresentando o gráfico boxplot
   void showChartModal(BuildContext context, dynamic responseData) {
     List<_ChartData> fetchedData = [];
 
@@ -657,6 +658,107 @@ class _SceneMediaState extends State<SceneMedia> {
       ),
     );
   }
+
+// RF inicio configuração do modal onde é apresentando o gráfico HITOGRAMA
+  void showChartModal_HITOGRAMA(BuildContext context, dynamic responseData) {
+    List<_ChartData> fetchedData = [];
+
+    // if (responseData.isNotEmpty) {
+    //   responseData.forEach((key, value) {
+    //     List<double> parsedValues =
+    //         List<double>.from(value.map((v) => double.parse(v.toString())));
+    //     fetchedData.add(_ChartData(key, parsedValues));
+    //   });
+    // }
+    responseData.forEach((key, value) {
+      value.forEach((v) {
+        histogramData.add(ChartData1(v));
+      });
+    });
+    print(histogramData);
+    
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                fetchedData.isNotEmpty
+                    ? Column(
+                        children: fetchedData
+                            .map((chartData) =>
+                                buildIndividualChart_HIST(chartData))
+                            .toList(),
+                      )
+                    : const Text('Sem dados para exibir'),
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    // RF Google ADMOB 22/12/2023 19:13
+                    // Primeiro, crie o anúncio
+                    // _showInterstitialAd();
+                    admobManager.showInterstitialAd();
+                    Navigator.of(context).pop(); // Fechar o modal
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            TodoListPage())); // Navegar para a página TodoListPage
+                  },
+                  child: const Text(
+                    'Fechar',
+                    style: TextStyle(
+                      color: Color(0xff5bc2c9), // Altere a cor do texto aqui
+                      fontSize: 16, // Tamanho da fonte (opcional)
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildIndividualChart_HIST(_ChartData chartData) {
+    // late TooltipBehavior _tooltip;
+    const myColor = Color.fromRGBO(8, 142, 255, 1);
+    const constantTextStyle = TextStyle(
+      color: Colors.black,
+      fontSize: 12,
+    );
+    const constantDataLabelSettings = DataLabelSettings(
+      isVisible: true,
+      labelAlignment: ChartDataLabelAlignment.middle,
+      textStyle: constantTextStyle,
+    );
+    return SizedBox(
+      height: 300,
+      child: SfCartesianChart(
+        primaryXAxis: CategoryAxis(),
+        primaryYAxis: NumericAxis(
+          labelStyle: constantTextStyle,
+          minimum: chartData.y.reduce(min).toDouble(),
+          maximum: chartData.y.reduce(max).toDouble(),
+          interval: 1,
+          labelFormat: '{value}',
+        ),
+        // tooltipBehavior: _tooltip,
+        series: <ChartSeries>[
+          BoxAndWhiskerSeries<_ChartData, String>(
+            dataSource: [chartData],
+            xValueMapper: (_ChartData data, _) => data.x,
+            yValueMapper: (_ChartData data, _) => data.y,
+            name: chartData.x,
+            color: myColor,
+            dataLabelSettings: constantDataLabelSettings,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _ChartData {
@@ -664,4 +766,10 @@ class _ChartData {
 
   final String x;
   final List<double> y;
+}
+
+class ChartData1 {
+  final double value;
+
+  ChartData1(this.value);
 }
