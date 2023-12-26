@@ -287,32 +287,6 @@ class _SceneMediaState extends State<SceneMedia> {
                 ),
               ),
               const SizedBox(height: 200),
-              // RF rodapé da pagina buttom retorno
-              // InkWell(
-              //   onTap: () {
-              //     Navigator.pushReplacement(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) => TodoListPage(),
-              //       ),
-              //     );
-              //   },
-              //   child: Container(
-              //     padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
-              //     width: 65,
-              //     height: 53,
-              //     child: Center(
-              //       child: Container(
-              //         width: 53,
-              //         height: 53,
-              //         child: Image.asset(
-              //           'assets/page-1/images/iconhomeazul-1.png',
-              //           fit: BoxFit.cover,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -413,46 +387,6 @@ class _SceneMediaState extends State<SceneMedia> {
       ),
     );
   }
-
-// // RF GOOGLE ADMOB 22/12/2023
-//   void _createInterstitialAd() {
-//     InterstitialAd.load(
-//         adUnitId: 'ca-app-pub-3940256099942544/1033173712',
-//         request: const AdRequest(),
-//         adLoadCallback: InterstitialAdLoadCallback(
-//           // Called when an ad is successfully received.
-//           onAdLoaded: (InterstitialAd ad) {
-//             // debugPrint('$ad loaded.');
-//             // Keep a reference to the ad so you can show it later.
-//             this._interstitialAd = ad;
-//           },
-//           // Called when an ad request failed.
-//           onAdFailedToLoad: (LoadAdError error) {
-//             debugPrint('InterstitialAd failed to load: $error');
-//           },
-//         ));
-//   }
-
-//   void _showInterstitialAd() {
-//     if (_interstitialAd == null) {
-//       print('Anuncio Null');
-//       return;
-//     }
-//     _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
-//       onAdShowedFullScreenContent: (InterstitialAd ad) =>
-//           print('%ad onAdShowedFullScreenContent 2'),
-//       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-//         print('$ad onAdDismissedFullScreenContent. 3 ');
-//         ad.dispose();
-//       },
-//       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-//         print('$ad onAdFailedToShowFullScreenContent 4: $error');
-//         ad.dispose();
-//       },
-//       onAdImpression: (InterstitialAd ad) => print('$ad impression ocurred 5.'),
-//     );
-//     _interstitialAd!.show();
-//   }
 }
 
 class _ChartData {
